@@ -51,8 +51,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="ffoto">Foto</label>
+                        <label for="ffoto">Foto Paket</label>
                         <input type="file" class="pt-1 form-control <?= form_error('ffoto') ? 'is-invalid' : '' ?>" id="ffoto" name="ffoto" placeholder="Enter Harga Paket" value="<?= $this->input->post('ffoto'); ?>" required>
+                        <small class="text-muted">*Format file harus <i>jpg/png/gif/jpeg</i>, maksimal <i>file size 2Mb</i></small>
                         <div class="invalid-feedback">
                             <?= form_error('ffoto') ?>
                         </div>
