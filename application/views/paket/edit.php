@@ -38,11 +38,12 @@
                         <label for="fkategori">Kategori</label>
                         <select class="form-control <?php echo form_error('fkategori') ? 'is-invalid' : '' ?>" id="fkategori" name="fkategori">
                             <option hidden value="" selected>Pilih Kategori</option>
-                            <option value="pernikahan" <?= $paket->id_kategori == "pernikahan" ? 'selected' : '' ?>>Pernikahan</option>
-                            <option value="wisuda" <?= $paket->id_kategori == "wisuda" ? 'selected' : '' ?>>Wisuda</option>
+                            <?php foreach ($kategori as $key) : ?>
+                                <option value="<?= $key->id_kategori ?>" <?= $paket->id_kategori == $key->id_kategori ? 'selected' : '' ?>><?= $key->nama_kategori ?></option>
+                            <?php endforeach ?>
                         </select>
                         <div class="invalid-feedback">
-                            <?= form_error('flevel') ?>
+                            <?= form_error('fkategori') ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -80,7 +81,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary float-right">Simpan</button>
+                    <button type="submit" class="btn btn-warning float-right">Simpan</button>
                     <a href="<?= base_url('paket') ?>" class="btn btn-secondary float-left">Batal</a>
 
                 </div>

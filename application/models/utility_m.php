@@ -1,38 +1,32 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class paket_m extends CI_Model
+class utility_m extends CI_Model
 {
-    private $_table = "paket";
+    private $_table = "utility";
 
-    public $id_paket;
-    public $nama_paket;
-    public $id_kategori;
-    public $deskripsi;
-    public $harga;
-    public $foto;
-    public $deleted;
+    public $id_utility;
+    public $nama_website;
+    public $judul_hero;
+    public $sub_judul_hero;
+    public $image_hero;
+
     public function rules()
     {
         return [
             [
-                'field' => 'fnama_paket',
-                'label' => 'Nama Paket',
+                'field' => 'fnama_website',
+                'label' => 'Nama Website',
                 'rules' => 'required'
             ],
             [
-                'field' => 'fkategori',
-                'label' => 'Kategori',
+                'field' => 'fjudul_hero',
+                'label' => 'Judul Hero',
                 'rules' => 'required'
             ],
             [
-                'field' => 'fdeskripsi',
-                'label' => 'Deskripsi',
-                'rules' => 'required'
-            ],
-            [
-                'field' => 'fharga',
-                'label' => 'Harga',
+                'field' => 'fsub_judul_hero',
+                'label' => 'Sub Judul Hero',
                 'rules' => 'required'
             ],
         ];
@@ -41,21 +35,16 @@ class paket_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->from($this->_table);
-        $this->db->where('paket.deleted', 0);
-        $this->db->join('kategori', 'kategori.id_kategori = paket.id_kategori');
         $query = $this->db->get();
-        return $query->result();
+        return $query->row();
     }
     public function get_by_id($id)
     {
         $this->db->select('*');
         $this->db->from($this->_table);
-        $this->db->where('paket.deleted', 0);
-        $this->db->where('paket.id_paket', $id);
-        $this->db->join('kategori', 'kategori.id_kategori = paket.id_kategori');
+        $this->db->where('utility.id_utility', $id);
         $query = $this->db->get();
         return $query->row();
-        // return $this->db->get_where($this->_table, ["id_paket" => $id])->row();
     }
     public function add($post, $file)
     {
@@ -73,12 +62,11 @@ class paket_m extends CI_Model
     public function update($post, $file)
     {
         $post = $this->input->post();
-        $this->db->set('id_kategori', $post['fkategori']);
-        $this->db->set('nama_paket', $post['fnama_paket']);
-        $this->db->set('harga', $post['fharga']);
-        $this->db->set('deskripsi', $post['fdeskripsi']);
-        $this->db->set('foto', $file);
-        $this->db->where('id_paket', $post['fid_paket']);
+        $this->db->set('nama_website', $post['fnama_website']);
+        $this->db->set('judul_hero', $post['fjudul_hero']);
+        $this->db->set('sub_judul_hero', $post['fsub_judul_hero']);
+        $this->db->set('image_hero', $file);
+        $this->db->where('id_utility', $post['fid_utility']);
         $this->db->update($this->_table);
     }
     public function delete($id)
@@ -89,4 +77,4 @@ class paket_m extends CI_Model
     }
 }
 
-/* End of file paket_m.php */
+/* End of file utility_m.php */

@@ -13,7 +13,7 @@ class User extends CI_Controller
     public function index()
     {
         $data['user'] = $this->user_m->get_all();
-        $this->template->load('shared/index', 'user/index', $data);
+        $this->template->load('shared/admin/index', 'user/index', $data);
     }
     public function create()
     {
@@ -21,7 +21,7 @@ class User extends CI_Controller
         $validation = $this->form_validation;
         $validation->set_rules($user->rules());
         if ($validation->run() == FALSE) {
-            $this->template->load('shared/index', 'user/create');
+            $this->template->load('shared/admin/index', 'user/create');
         } else {
             $post = $this->input->post(null, TRUE);
             $user->Add($post);
@@ -53,7 +53,7 @@ class User extends CI_Controller
             $this->session->set_flashdata('error', 'Data User Tidak ditemukan!');
             redirect('user', 'refresh');
         }
-        $this->template->load('shared/index', 'user/edit', $data);
+        $this->template->load('shared/admin/index', 'user/edit', $data);
     }
     public function delete($id)
     {

@@ -8,12 +8,13 @@ class Paket extends CI_Controller
     {
         parent::__construct();
         $this->load->model('paket_m');
+        $this->load->model('kategori_m');
     }
 
     public function index()
     {
         $data['paket'] = $this->paket_m->get_all();
-        $this->template->load('shared/index', 'paket/index', $data);
+        $this->template->load('shared/admin/index', 'paket/index', $data);
     }
     public function create()
     {
@@ -21,7 +22,8 @@ class Paket extends CI_Controller
         $validation = $this->form_validation;
         $validation->set_rules($paket->rules());
         if ($validation->run() == FALSE) {
-            $this->template->load('shared/index', 'paket/create');
+            $data['kategori'] = $this->kategori_m->get_all();
+            $this->template->load('shared/admin/index', 'paket/create', $data);
         } else {
             $post = $this->input->post(null, TRUE);
             $config['upload_path']          = './uploads/paket';
@@ -31,7 +33,7 @@ class Paket extends CI_Controller
             $this->load->library('upload', $config);
             if (!$this->upload->do_upload('ffoto')) {
                 $this->session->set_flashdata('error', 'Data paket gagal disimpan!');
-                $this->template->load('shared/index', 'paket/create');
+                $this->template->load('shared/admin/index', 'paket/create');
             } else {
                 $data = $this->upload->data();
                 $file = $data['file_name'];
@@ -60,7 +62,7 @@ class Paket extends CI_Controller
                 if (!$this->upload->do_upload('ffoto')) {
                     $this->upload->display_errors();
                     $this->session->set_flashdata('error', 'Data paket gagal diupdate!');
-                    $this->template->load('shared/index', 'paket/index');
+                    $this->template->load('shared/admin/index', 'paket/index');
                 } else {
                     $data = $this->upload->data();
                     $file = $data['file_name'];
@@ -90,7 +92,8 @@ class Paket extends CI_Controller
             $this->session->set_flashdata('error', 'Data paket Tidak ditemukan!');
             redirect('paket', 'refresh');
         }
-        $this->template->load('shared/index', 'paket/edit', $data);
+        $data['kategori'] = $this->kategori_m->get_all();
+        $this->template->load('shared/admin/index', 'paket/edit', $data);
     }
     public function delete($id)
     {
