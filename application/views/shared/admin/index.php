@@ -113,10 +113,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo base_url('pesan') ?>" class="nav-link <?= $this->uri->segment(1) == 'pesan' ? 'active' : '' ?><?= $this->uri->segment(1) == '' ? 'active' : '' ?>">
+                            <a href="<?php echo base_url('portofolio') ?>" class="nav-link <?= $this->uri->segment(1) == 'portofolio' ? 'active' : '' ?><?= $this->uri->segment(1) == '' ? 'active' : '' ?>">
+                                <i class="nav-icon fas fa-swatchbook"></i>
+                                <p>
+                                    Master Portofolio
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo base_url('pesanan') ?>" class="nav-link <?= $this->uri->segment(1) == 'pesanan' ? 'active' : '' ?><?= $this->uri->segment(1) == '' ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-cart-plus"></i>
                                 <p>
-                                    Pesan Masuk
+                                    Pesanan
                                 </p>
                             </a>
                         </li>

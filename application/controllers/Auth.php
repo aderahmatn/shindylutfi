@@ -16,6 +16,27 @@ class Auth extends CI_Controller
         $data['kontak'] = $this->kontak_m->get_all();
         $this->template->load('shared/landing/index', 'auth/login', $data);
     }
+    public function process_login()
+    {
+        $post = $this->input->post(null, TRUE);
+        $query = $this->customer_m->login($post);
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            $params = array(
+                'id_customer' => $row->id_customer,
+                'nama_customer' => $row->nama_lengkap,
+                'email' => $row->email,
+                'telepon' => $row->telepon,
+                'username' => $row->username,
+                'status' => 'login_customer'
+            );
+            $this->session->set_userdata($params);
+            redirect('beranda', 'refresh');
+        } else {
+            $this->session->set_flashdata('error', 'username / password salah!');
+            redirect('auth/login', 'refresh');
+        }
+    }
     public function daftar()
     {
         $customer  = $this->customer_m;
@@ -33,6 +54,19 @@ class Auth extends CI_Controller
                 redirect('auth/login', 'refresh');
             }
         }
+    }
+    public function logout()
+    {
+        $params = array(
+            'id_customer',
+            'nama_customer',
+            'email',
+            'telepon',
+            'username',
+            'status',
+        );
+        $this->session->unset_userdata($params);
+        redirect('auth/login', 'refresh');
     }
 }
 

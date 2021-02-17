@@ -47,7 +47,7 @@ class Paket extends CI_Controller
     }
     public function edit($id = null)
     {
-        if (!isset($id)) redirect('user');
+        if (!isset($id)) redirect('paket');
         $paket = $this->paket_m;
         $validation = $this->form_validation;
         $validation->set_rules($paket->rules());

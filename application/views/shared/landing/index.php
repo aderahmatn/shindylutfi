@@ -28,11 +28,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="../assets/plugins/jquery/jquery.min.js"></script>
+    <script src="<?= base_url() . 'assets/plugins/jquery/jquery.min.js' ?>"></script>
     <!-- Bootstrap 4 -->
-    <script src="../assets/plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="<?= base_url() . 'assets/plugins/bootstrap/js/bootstrap.js' ?>"></script>
     <!-- AdminLTE App -->
-    <script src="../assets/dist/js/adminlte.min.js"></script>
+    <script src="<?= base_url() . 'assets/dist/js/adminlte.min.js' ?>"></script>
     <!-- Sweetalert -->
     <script src="<?= base_url() . 'assets/plugins/sweetalert2/sweetalert2.min.js' ?>"></script>
     <!-- Toastr -->
@@ -66,27 +66,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a class="nav-link" href="<?= base_url('kontak') ?>">Kontak</a>
                     </li>
                     <li class="nav-item border mr-4 ml-2 border-light my-1 rounded"></li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-light <?= $this->uri->segment(1) == 'auth' ? 'active' : '' ?>" href="<?= base_url('auth/login') ?>">Masuk</a>
-                    </li>
-                    <!-- <li class="nav-item dropdown ml-n3">
-                        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
-                            Aderahmatn
-                        </a>
-                        <div class="dropdown-menu bg-nude">
-                            <a href="<?= base_url('profile') ?>" class="dropdown-item">
-                                <i class="fas fa-user mr-2" style="color: #D8CBF6;"></i> Profile Saya
+                    <?php if ($this->session->userdata('status') != 'login_customer') { ?>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-light <?= $this->uri->segment(2) == 'login' ? 'active' : '' ?>" href="<?= base_url('auth/login') ?>">Masuk</a>
+                        </li>
+                    <?php  } else { ?>
+                        <li class="nav-item dropdown ml-n3">
+                            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
+                                <?= ucfirst($this->session->userdata('username')) ?>
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="<?= base_url('pesanan_saya') ?>" class="dropdown-item">
-                                <i class="fas fa-shopping-cart mr-2" style="color: #D8CBF6;"></i> Pesanan Saya
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-logout">
-                                <i class="fas fa-sign-out-alt mr-2" style="color: #D8CBF6;"></i> Keluar
-                            </a>
-                        </div>
-                    </li> -->
+                            <div class="dropdown-menu bg-nude">
+                                <a href="<?= base_url('profile') ?>" class="dropdown-item">
+                                    <i class="fas fa-user mr-2" style="color: #D8CBF6;"></i> Profile Saya
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="<?= base_url('pesanan_saya') ?>" class="dropdown-item">
+                                    <i class="fas fa-shopping-cart mr-2" style="color: #D8CBF6;"></i> Pesanan Saya
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-logout">
+                                    <i class="fas fa-sign-out-alt mr-2" style="color: #D8CBF6;"></i> Keluar
+                                </a>
+                            </div>
+                        </li>
+                    <?php } ?>
+
                 </ul>
             </div>
         </nav>

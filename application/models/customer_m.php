@@ -55,7 +55,13 @@ class customer_m extends CI_Model
             ],
         ];
     }
-
+    public function get_all()
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function add()
     {
         $post = $this->input->post();
@@ -68,6 +74,15 @@ class customer_m extends CI_Model
         $this->username = $post['fusername'];
         $this->password = md5($post['fpassword']);
         $this->db->insert($this->_table, $this);
+    }
+    public function login($post)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where('username', $post['fusername']);
+        $this->db->where('password', md5($post['fpassword']));
+        $query = $this->db->get();
+        return $query;
     }
 }
 
