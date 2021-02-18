@@ -105,6 +105,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="<?php echo base_url('petugas') ?>" class="nav-link <?= $this->uri->segment(1) == 'petugas' ? 'active' : '' ?><?= $this->uri->segment(1) == '' ? 'active' : '' ?>">
+                                <i class="nav-icon fas fa-person-booth"></i>
+                                <p>
+                                    Master Petugas
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="<?php echo base_url('customer') ?>" class="nav-link <?= $this->uri->segment(1) == 'customer' ? 'active' : '' ?><?= $this->uri->segment(1) == '' ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-hand-sparkles"></i>
                                 <p>

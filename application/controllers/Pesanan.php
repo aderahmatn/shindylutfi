@@ -9,6 +9,7 @@ class Pesanan extends CI_Controller
         parent::__construct();
         $this->load->model('pesanan_m');
         $this->load->model('bayar_m');
+        $this->load->model('petugas_m');
     }
 
     public function index()
@@ -19,7 +20,18 @@ class Pesanan extends CI_Controller
     public function konfirmasi_bayar($id)
     {
         $data['pesanan'] = $this->pesanan_m->get_by_id($id);
+        $data['petugas'] = $this->petugas_m->get_all();
         $this->template->load('shared/admin/index', 'pesanan/konfirmasi_bayar', $data);
+    }
+    public function process_konfirmasi_bayar()
+    {
+        $post = $this->input->post(null, TRUE);
+        $this->pesanan_m->konfirmasi_bayar($post);
+        $this->pesanan_m->update_pesanan_diproses($post['fid_transaksi']);
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', 'Konfirmasi pembayaran berhasil!');
+            redirect('pesanan', 'refresh');
+        }
     }
     public function create()
     {
@@ -39,7 +51,13 @@ class Pesanan extends CI_Controller
             }
         }
     }
-
+    public function pembayaran($id)
+    {
+        $data['util'] = $this->utility_m->get_all();
+        $data['kontak'] = $this->kontak_m->get_all();
+        $data['pesanan'] = $this->pesanan_m->get_by_id($id);
+        $this->template->load('shared/landing/index', 'pesanan/pembayaran', $data);
+    }
     public function bayar()
     {
         $post = $this->input->post(null, TRUE);
@@ -69,6 +87,22 @@ class Pesanan extends CI_Controller
         $data['util'] = $this->utility_m->get_all();
         $data['kontak'] = $this->kontak_m->get_all();
         $this->template->load('shared/landing/index', 'pesanan/berhasil', $data);
+    }
+    public function pesanan_saya()
+    {
+        $data['pesanan'] = $this->pesanan_m->get_by_customer($this->session->userdata('id_customer'));
+        $data['util'] = $this->utility_m->get_all();
+        $data['kontak'] = $this->kontak_m->get_all();
+        $this->template->load('shared/landing/index', 'pesanan/pesanan_saya', $data);
+    }
+    public function batal($id)
+    {
+        $this->pesanan_m->batal($id);
+        $this->pesanan_m->batal_detail($id);
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', 'Pesanan berhasil dibatalkan');
+            redirect('pesanan/pesanan_saya', 'refresh');
+        }
     }
 }
 

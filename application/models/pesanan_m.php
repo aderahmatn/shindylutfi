@@ -55,11 +55,47 @@ class pesanan_m extends CI_Model
         $query = $this->db->get();
         return $query->row();
     }
+    public function get_by_customer($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('customer', 'customer.id_customer = transaksi.id_customer');
+        $this->db->join('paket', 'paket.id_paket = transaksi.id_paket');
+        $this->db->join('bayar', 'bayar.id_transaksi = transaksi.id_transaksi', 'left');
+        $this->db->join('detail_transaksi', 'detail_transaksi.id_transaksi = transaksi.id_transaksi');
+        $this->db->where('transaksi.id_customer', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function update_konfirmasi_pembayaran($id)
     {
         $this->db->set('status_transaksi', 'menunggu konfirmasi');
         $this->db->where('id_transaksi', $id);
         $this->db->update($this->_table);
+    }
+    public function update_pesanan_diproses($id)
+    {
+        $this->db->set('status_transaksi', 'pesanan diproses');
+        $this->db->where('id_transaksi', $id);
+        $this->db->update($this->_table);
+    }
+    public function konfirmasi_bayar($post)
+    {
+        $post = $this->input->post();
+        $this->db->set('id_user', $post['fid_user']);
+        $this->db->set('id_petugas', $post['fpetugas']);
+        $this->db->where('id_transaksi', $post['fid_transaksi']);
+        $this->db->update('detail_transaksi');
+    }
+    public function batal($id)
+    {
+        $this->db->where('id_transaksi', $id);
+        $this->db->delete($this->_table);
+    }
+    public function batal_detail($id)
+    {
+        $this->db->where('id_transaksi', $id);
+        $this->db->delete('detail_transaksi');
     }
 }
 

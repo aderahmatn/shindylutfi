@@ -22,8 +22,9 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+            <form role="form" method="POST" action="<?= base_url('pesanan/process_konfirmasi_bayar') ?>" autocomplete="off" enctype="multipart/form-data">
                 <input type="hidden" name="fid_user" id="" value="<?= $this->session->userdata('id_user') ?>">
+                <input type="hidden" name="fid_transaksi" id="" value="<?= $pesanan->id_transaksi ?>">
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-md-4">
@@ -47,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label for="fpetugas">Petugas Makeup</label>
-                        <select class="form-control <?php echo form_error('fpetugas') ? 'is-invalid' : '' ?>" id="fpetugas" name="fpetugas">
+                        <select class="form-control <?php echo form_error('fpetugas') ? 'is-invalid' : '' ?>" id="fpetugas" name="fpetugas" required>
                             <option hidden value="" selected>Pilih Petugas</option>
                             <?php foreach ($petugas as $key) : ?>
                                 <option value="<?= $key->id_petugas ?>" <?= $this->input->post('fpetugas') == $key->id_petugas ? 'selected' : '' ?>><?= $key->nama_petugas ?></option>

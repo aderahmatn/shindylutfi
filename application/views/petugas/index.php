@@ -3,11 +3,11 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Data pesanan</h1>
+                <h1>Data Petugas</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item active">Data pesanan</li>
+                    <li class="breadcrumb-item active">Data petugas</li>
                 </ol>
             </div>
         </div>
@@ -21,7 +21,9 @@
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header">
-                        <h3 class="card-title">Data pesanan</h3>
+                        <h3 class="card-title">Data petugas</h3>
+                        <a href="<?= base_url('petugas/create') ?>" class="btn btn-sm btn-warning float-right"> + Tambah</a>
+
                     </div>
                     <!-- /.card-header -->
                     <!-- card-body -->
@@ -30,49 +32,28 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">No</th>
-                                    <th>Customer</th>
-                                    <th>Tgl Acara </th>
-                                    <th>Alamat Acara</th>
-                                    <th>Paket</th>
-                                    <th style="width: 180px">Status</th>
-                                    <th style="width: 140px">Modify</th>
+                                    <th>Nama Petugas</th>
+                                    <th>Alamat</th>
+                                    <th>Email</th>
+                                    <th>Telepon</th>
+                                    <th style="width: 10px">Modify</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $no = 1;
-                                foreach ($pesanan as $key) : ?>
+                                foreach ($petugas as $key) : ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= $key->nama_lengkap ?></td>
-                                        <td><?= $key->tanggal_acara ?></td>
-                                        <td><?= $key->alamat_acara ?></td>
-                                        <td><?= $key->nama_paket ?></td>
+                                        <td><?= $key->nama_petugas ?></td>
+                                        <td><?= $key->alamat ?></td>
+                                        <td><?= $key->email ?></td>
+                                        <td><?= $key->telepon ?></td>
                                         <td>
-                                            <?php
-                                            if ($key->status_transaksi == 'belum bayar') { ?>
-                                                <span class="badge badge-danger">Belum bayar</span>
-                                            <?php } ?>
-                                            <?php
-                                            if ($key->status_transaksi == 'menunggu konfirmasi') { ?>
-                                                <span class="badge badge-warning">Menunggu konfirmasi pembayaran</span>
-                                            <?php } ?>
-                                            <?php
-                                            if ($key->status_transaksi == 'pesanan diproses') { ?>
-                                                <span class="badge badge-primary">Pesanan diproses</span>
-                                            <?php } ?>
-                                        </td>
-
-                                        <td>
-                                            <?php
-                                            if ($key->status_transaksi == 'menunggu konfirmasi') { ?>
-                                                <div class="btn-group">
-                                                    <a href="<?= base_url('pesanan/konfirmasi_bayar/') . $key->id_transaksi ?>"><button type="button" class="btn btn-default btn-sm">Konfirmasi Pembayaran</button></a>
-                                                </div>
-                                            <?php } ?>
-
                                             <div class="btn-group">
-                                                <a href="<?= base_url('pesanan/detail/') . $key->id_transaksi ?>"><button type="button" class="btn btn-default btn-sm">Detail</button></a>
+                                                <a href="<?= base_url('petugas/edit/') . $key->id_petugas ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
+
+                                                <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'petugas/delete/' . $key->id_petugas ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </td>
                                     </tr>

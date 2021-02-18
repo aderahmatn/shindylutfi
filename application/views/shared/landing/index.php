@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <i class="fas fa-user mr-2" style="color: #D8CBF6;"></i> Profile Saya
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="<?= base_url('pesanan_saya') ?>" class="dropdown-item">
+                                <a href="<?= base_url('pesanan/pesanan_saya') ?>" class="dropdown-item">
                                     <i class="fas fa-shopping-cart mr-2" style="color: #D8CBF6;"></i> Pesanan Saya
                                 </a>
                                 <div class="dropdown-divider"></div>
