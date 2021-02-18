@@ -147,6 +147,15 @@ class user_m extends CI_Model
         $this->db->where('id_user', $post['fid_user']);
         $this->db->update($this->_table);
     }
+    public function login($post)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where('username', $post['fusername']);
+        $this->db->where('password', md5($post['fpassword']));
+        $query = $this->db->get();
+        return $query;
+    }
 }
 
 /* End of file user_m.php */

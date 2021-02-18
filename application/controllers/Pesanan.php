@@ -16,6 +16,11 @@ class Pesanan extends CI_Controller
         $data['pesanan'] = $this->pesanan_m->get_all();
         $this->template->load('shared/admin/index', 'pesanan/index', $data);
     }
+    public function konfirmasi_bayar($id)
+    {
+        $data['pesanan'] = $this->pesanan_m->get_by_id($id);
+        $this->template->load('shared/admin/index', 'pesanan/konfirmasi_bayar', $data);
+    }
     public function create()
     {
         $post = $this->input->post(null, TRUE);
@@ -24,6 +29,7 @@ class Pesanan extends CI_Controller
             redirect('auth/login', 'refresh');
         } else {
             $this->pesanan_m->add($post);
+            $this->pesanan_m->add_detail($post);
             if ($this->db->affected_rows() > 0) {
                 $this->session->set_flashdata('success', 'Data pesanan berhasil disimpan!');
                 $data['util'] = $this->utility_m->get_all();
@@ -51,6 +57,7 @@ class Pesanan extends CI_Controller
             $data = $this->upload->data();
             $file = $data['file_name'];
             $this->bayar_m->Add($post, $file);
+            $this->pesanan_m->update_konfirmasi_pembayaran($post['fid_transaksi']);
             if ($this->db->affected_rows() > 0) {
                 $this->session->set_flashdata('success', 'Konfirmasi pembayaran berhasil dikirim!');
                 redirect('pesanan/berhasil', 'refresh');

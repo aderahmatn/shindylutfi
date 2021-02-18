@@ -31,29 +31,41 @@
                                 <tr>
                                     <th style="width: 10px">No</th>
                                     <th>Customer</th>
-                                    <th>Tanggal </th>
-                                    <th>Deskripsi</th>
-                                    <th>Harga</th>
-                                    <th>Foto</th>
-                                    <th style="width: 10px">Modify</th>
+                                    <th>Tgl Acara </th>
+                                    <th>Alamat Acara</th>
+                                    <th>Paket</th>
+                                    <th style="width: 180px">Status</th>
+                                    <th style="width: 140px">Modify</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $no = 1;
-                                foreach ($paket as $key) : ?>
+                                foreach ($pesanan as $key) : ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
+                                        <td><?= $key->nama_lengkap ?></td>
+                                        <td><?= $key->tanggal_acara ?></td>
+                                        <td><?= $key->alamat_acara ?></td>
                                         <td><?= $key->nama_paket ?></td>
-                                        <td><?= $key->nama_kategori ?></td>
-                                        <td><?= $key->deskripsi ?></td>
-                                        <td><?= 'Rp. ' . $key->harga ?></td>
-                                        <td><img src="<?= base_url('./uploads/paket/') . $key->foto ?>" alt="foto paket" width="50" class="img-thumbnail"></td>
+                                        <td>
+                                            <?php
+                                            if ($key->status_transaksi == 'belum bayar') { ?>
+                                                <span class="badge badge-danger">Belum bayar</span>
+                                            <?php } ?>
+                                            <?php
+                                            if ($key->status_transaksi == 'menunggu konfirmasi') { ?>
+                                                <span class="badge badge-warning">Menunggu konfirmasi pembayaran</span>
+                                            <?php } ?>
+                                            <?php
+                                            if ($key->status_transaksi == 'sudah bayar') { ?>
+                                                <span class="badge badge-primary">Sudah bayar</span>
+                                            <?php } ?>
+                                        </td>
+
                                         <td>
                                             <div class="btn-group">
-                                                <a href="<?= base_url('paket/edit/') . $key->id_paket ?>"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-detail" data-tolltip="tooltip" data-placement="top" <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pencil-alt" data-tolltip="tooltip" data-placement="top" title="Edit"></i></button></a>
-
-                                                <button type="button" class="btn btn-default btn-sm" onclick="deleteConfirm('<?= base_url() . 'paket/delete/' . $key->id_paket ?>')" data-tolltip="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                                <a href="<?= base_url('pesanan/konfirmasi_bayar/') . $key->id_transaksi ?>"><button type="button" class="btn btn-default btn-sm">Konfirmasi Pembayaran</button></a>
                                             </div>
                                         </td>
                                     </tr>

@@ -63,8 +63,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="<?= base_url('assets/images/user.jpg') ?>" class="img-circle mt-3" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Ade Rahmat</a>
-                        <p><span class="mb-0 badge badge-warning">Admin</span>
+                        <a href="#" class="d-block"><?= ucwords($this->session->userdata('nama_user')) ?></a>
+                        <p><span class="mb-0 badge badge-warning"><?= $this->session->userdata('level_user') ?></span>
                         </p>
                     </div>
                 </div>
@@ -220,7 +220,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn  btn-secondary" data-dismiss="modal">Batal</button>
-                <a type="button" class="btn  btn-danger" href="<?= site_url('auth/logout') ?>">Logout</a>
+                <a type="button" class="btn  btn-danger" href="<?= site_url('auth/logout_admin') ?>">Logout</a>
             </div>
         </div>
         <!-- /.modal-content -->

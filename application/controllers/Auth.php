@@ -8,6 +8,7 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->model('customer_m');
+        $this->load->model('user_m');
     }
 
     public function login()
@@ -15,6 +16,10 @@ class Auth extends CI_Controller
         $data['util'] = $this->utility_m->get_all();
         $data['kontak'] = $this->kontak_m->get_all();
         $this->template->load('shared/landing/index', 'auth/login', $data);
+    }
+    public function login_admin()
+    {
+        $this->load->view('auth/login_admin');
     }
     public function process_login()
     {
@@ -35,6 +40,28 @@ class Auth extends CI_Controller
         } else {
             $this->session->set_flashdata('error', 'username / password salah!');
             redirect('auth/login', 'refresh');
+        }
+    }
+    public function process_login_admin()
+    {
+        $post = $this->input->post(null, TRUE);
+        $query = $this->user_m->login($post);
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            $params = array(
+                'id_user' => $row->id_user,
+                'nama_user' => $row->nama_lengkap,
+                'email_user' => $row->email,
+                'level_user' => $row->level,
+                'telepon_user' => $row->telepon,
+                'username_user' => $row->username,
+                'status' => 'login_user'
+            );
+            $this->session->set_userdata($params);
+            redirect('dashboard', 'refresh');
+        } else {
+            $this->session->set_flashdata('error', 'username / password salah!');
+            redirect('auth/login_admin', 'refresh');
         }
     }
     public function daftar()
@@ -67,6 +94,20 @@ class Auth extends CI_Controller
         );
         $this->session->unset_userdata($params);
         redirect('auth/login', 'refresh');
+    }
+    public function logout_admin()
+    {
+        $params = array(
+            'id_user',
+            'nama_user',
+            'email_user',
+            'telepon_user',
+            'username_user',
+            'status',
+            'level_user',
+        );
+        $this->session->unset_userdata($params);
+        redirect('auth/login_admin', 'refresh');
     }
 }
 
