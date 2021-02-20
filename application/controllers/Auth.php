@@ -13,12 +13,14 @@ class Auth extends CI_Controller
 
     public function login()
     {
+        check_already_login_customer();
         $data['util'] = $this->utility_m->get_all();
         $data['kontak'] = $this->kontak_m->get_all();
         $this->template->load('shared/landing/index', 'auth/login', $data);
     }
     public function login_admin()
     {
+        check_already_login_user();
         $this->load->view('auth/login_admin');
     }
     public function process_login()

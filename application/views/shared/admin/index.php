@@ -137,7 +137,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo base_url('laporan') ?>" class="nav-link <?= $this->uri->segment(1) == 'laporan' ? 'active' : '' ?><?= $this->uri->segment(1) == '' ? 'active' : '' ?>">
+                            <a href="<?php echo base_url('report') ?>" class="nav-link <?= $this->uri->segment(1) == 'report' ? 'active' : '' ?><?= $this->uri->segment(1) == '' ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-file-contract"></i>
                                 <p>
                                     Laporan

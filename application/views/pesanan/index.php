@@ -61,6 +61,10 @@
                                             if ($key->status_transaksi == 'pesanan diproses') { ?>
                                                 <span class="badge badge-primary">Pesanan diproses</span>
                                             <?php } ?>
+                                            <?php
+                                            if ($key->status_transaksi == 'selesai') { ?>
+                                                <span class="badge badge-success">Selesai</span>
+                                            <?php } ?>
                                         </td>
 
                                         <td>
@@ -70,7 +74,12 @@
                                                     <a href="<?= base_url('pesanan/konfirmasi_bayar/') . $key->id_transaksi ?>"><button type="button" class="btn btn-default btn-sm">Konfirmasi Pembayaran</button></a>
                                                 </div>
                                             <?php } ?>
-
+                                            <?php
+                                            if ($key->status_transaksi == 'pesanan diproses') { ?>
+                                                <div class="btn-group">
+                                                    <a href="<?= base_url('pesanan/konfirmasi_selesai/') . $key->id_transaksi ?>"><button type="button" class="btn btn-default btn-sm">Selesai</button></a>
+                                                </div>
+                                            <?php } ?>
                                             <div class="btn-group">
                                                 <a href="<?= base_url('pesanan/detail/') . $key->id_transaksi ?>"><button type="button" class="btn btn-default btn-sm">Detail</button></a>
                                             </div>

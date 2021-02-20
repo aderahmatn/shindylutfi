@@ -36,6 +36,10 @@
                                 if ($key->status_transaksi == 'pesanan diproses') { ?>
                                     <span class="badge badge-primary">Pesanan diproses</span>
                                 <?php } ?>
+                                <?php
+                                if ($key->status_transaksi == 'selesai') { ?>
+                                    <span class="badge badge-success">Selesai</span>
+                                <?php } ?>
                             </td>
 
                             <td>

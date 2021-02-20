@@ -79,6 +79,12 @@ class pesanan_m extends CI_Model
         $this->db->where('id_transaksi', $id);
         $this->db->update($this->_table);
     }
+    public function update_pesanan_selesai($id)
+    {
+        $this->db->set('status_transaksi', 'selesai');
+        $this->db->where('id_transaksi', $id);
+        $this->db->update($this->_table);
+    }
     public function konfirmasi_bayar($post)
     {
         $post = $this->input->post();

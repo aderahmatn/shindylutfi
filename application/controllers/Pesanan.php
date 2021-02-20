@@ -14,17 +14,33 @@ class Pesanan extends CI_Controller
 
     public function index()
     {
+        check_not_login_user();
+        check_role_user();
         $data['pesanan'] = $this->pesanan_m->get_all();
         $this->template->load('shared/admin/index', 'pesanan/index', $data);
     }
     public function konfirmasi_bayar($id)
     {
+        check_not_login_user();
+        check_role_user();
         $data['pesanan'] = $this->pesanan_m->get_by_id($id);
         $data['petugas'] = $this->petugas_m->get_all();
         $this->template->load('shared/admin/index', 'pesanan/konfirmasi_bayar', $data);
     }
+    public function konfirmasi_selesai($id)
+    {
+        check_not_login_user();
+        check_role_user();
+        $this->pesanan_m->update_pesanan_selesai($id);
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('success', 'Pesanan selesai!');
+            redirect('pesanan', 'refresh');
+        }
+    }
     public function process_konfirmasi_bayar()
     {
+        check_not_login_user();
+        check_role_user();
         $post = $this->input->post(null, TRUE);
         $this->pesanan_m->konfirmasi_bayar($post);
         $this->pesanan_m->update_pesanan_diproses($post['fid_transaksi']);
@@ -35,6 +51,7 @@ class Pesanan extends CI_Controller
     }
     public function create()
     {
+
         $post = $this->input->post(null, TRUE);
         if ($post['fid_customer'] == null) {
             $this->session->set_flashdata('error', 'Silahkan login sebelum melakukan pemesanan!');
@@ -53,6 +70,8 @@ class Pesanan extends CI_Controller
     }
     public function pembayaran($id)
     {
+        check_not_login_customer();
+        check_role_customer();
         $data['util'] = $this->utility_m->get_all();
         $data['kontak'] = $this->kontak_m->get_all();
         $data['pesanan'] = $this->pesanan_m->get_by_id($id);
@@ -60,6 +79,8 @@ class Pesanan extends CI_Controller
     }
     public function bayar()
     {
+        check_not_login_customer();
+        check_role_customer();
         $post = $this->input->post(null, TRUE);
         $config['upload_path']          = './uploads/bayar';
         $config['allowed_types']        = 'gif|jpg|png|jpeg';
@@ -84,12 +105,16 @@ class Pesanan extends CI_Controller
     }
     public function berhasil()
     {
+        check_not_login_customer();
+        check_role_customer();
         $data['util'] = $this->utility_m->get_all();
         $data['kontak'] = $this->kontak_m->get_all();
         $this->template->load('shared/landing/index', 'pesanan/berhasil', $data);
     }
     public function pesanan_saya()
     {
+        check_not_login_customer();
+        check_role_customer();
         $data['pesanan'] = $this->pesanan_m->get_by_customer($this->session->userdata('id_customer'));
         $data['util'] = $this->utility_m->get_all();
         $data['kontak'] = $this->kontak_m->get_all();
@@ -97,6 +122,8 @@ class Pesanan extends CI_Controller
     }
     public function batal($id)
     {
+        check_not_login_customer();
+        check_role_customer();
         $this->pesanan_m->batal($id);
         $this->pesanan_m->batal_detail($id);
         if ($this->db->affected_rows() > 0) {

@@ -7,6 +7,8 @@ class petugas extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        check_not_login_user();
+        check_role_user();
         $this->load->model('petugas_m');
     }
 
